@@ -1,0 +1,163 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5267,        153]
+NotebookOptionsPosition[      4956,        139]
+NotebookOutlinePosition[      5313,        155]
+CellTagsIndexPosition[      5270,        152]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"characters", "=", 
+    RowBox[{"Flatten", "[", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"FromCharacterCode", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"i", ",", "j"}], "}"}], ",", "\"\<CP936\>\""}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", 
+         RowBox[{"160", "+", "16"}], ",", 
+         RowBox[{"160", "+", "54"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "161", ",", "254"}], "}"}]}], "]"}], "]"}]}], ";"}],
+   "\n", "\n"}], "\n", 
+ RowBox[{
+  RowBox[{"img", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ColorConvert", "[", 
+       RowBox[{
+        RowBox[{"Import", "[", "#", "]"}], ",", "\"\<Grayscale\>\""}], "]"}], 
+      "&"}], ",", 
+     RowBox[{"FileNames", "[", "\"\<Pool\\\\*.jpg\>\"", "]"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"i", "=", "0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"lightFunction", "[", "ch_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Total", "[", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{"ImageData", "[", 
+       RowBox[{"Binarize", "@", 
+        RowBox[{"Rasterize", "[", "ch", "]"}]}], "]"}], "]"}], "]"}], "/", 
+    RowBox[{"(", 
+     RowBox[{"13", "*", "16"}], ")"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"Dynamic", "[", "i", "]"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"i", "++"}], ";", 
+      RowBox[{
+       RowBox[{"light", "[", "#", "]"}], "=", 
+       RowBox[{"lightFunction", "[", "#", "]"}]}]}], ")"}], "&"}], "/@", 
+   "characters"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"i", "=", "0"}], ";", "\n", 
+     RowBox[{"result", "=", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"i", "++"}], ";", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"SortBy", "[", 
+             RowBox[{
+              RowBox[{"RandomSample", "[", 
+               RowBox[{"characters", ",", "1000"}], "]"}], ",", 
+              RowBox[{"Function", "[", 
+               RowBox[{"ch", ",", 
+                RowBox[{"Abs", "[", 
+                 RowBox[{
+                  RowBox[{"light", "[", "ch", "]"}], "-", "#"}], "]"}]}], 
+               "]"}]}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}], "&"}], ",", 
+        RowBox[{"ImageData", "[", 
+         RowBox[{"ImageResize", "[", 
+          RowBox[{
+           RowBox[{"img", "[", 
+            RowBox[{"[", "j", "]"}], "]"}], ",", "360"}], "]"}], "]"}], ",", 
+        RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", "\n", 
+     RowBox[{"Export", "[", 
+      RowBox[{
+       RowBox[{"\"\<EXP\\\\\>\"", "<>", 
+        RowBox[{"ToString", "[", "j", "]"}], "<>", "\"\<.txt\>\""}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Append", "[", 
+            RowBox[{"#", ",", "\"\<\\n\>\""}], "]"}], "&"}], "/@", "result"}],
+          "//", "StringJoin"}], "//", "StringJoin"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", 
+      RowBox[{"j", "/", 
+       RowBox[{"Length", "[", "img", "]"}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"j", ",", "1", ",", 
+      RowBox[{"Length", "[", "img", "]"}]}], "}"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Print", "[", "\"\<Calculate Complete!\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.730719647847451*^9, 3.730719648203639*^9}, {
+  3.7307726090475426`*^9, 3.730772615829744*^9}, {3.730780879089978*^9, 
+  3.730780923844902*^9}, {3.730780960631337*^9, 3.7307810078650255`*^9}, {
+  3.7307811369263334`*^9, 3.730781149481455*^9}, {3.7320810372439156`*^9, 
+  3.7320810469687104`*^9}, {3.745056357323538*^9, 3.7450563861924405`*^9}, {
+  3.745056674352919*^9, 3.7450569546673827`*^9}, {3.7450579742055464`*^9, 
+  3.745057989302676*^9}, {3.7450590736321373`*^9, 3.745059077752077*^9}, {
+  3.7450593481354103`*^9, 3.7450593620024223`*^9}, {3.7450610504783363`*^9, 
+  3.74506105065618*^9}, {3.7450648467450914`*^9, 3.7450648526771955`*^9}, {
+  3.745064884824273*^9, 3.745064885466471*^9}, {3.7450650678089743`*^9, 
+  3.745065069168211*^9}, {3.7450653529128313`*^9, 
+  3.7450653629970503`*^9}},ExpressionUUID->"b4dc5fc6-0996-43ba-b89f-\
+8b63e5bb0c64"]
+},
+WindowSize->{751, 817},
+WindowMargins->{{Automatic, 575}, {Automatic, 83}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (2018\:5e743\:670828\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 4394, 117, 832, "Input",ExpressionUUID->"b4dc5fc6-0996-43ba-b89f-8b63e5bb0c64"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
