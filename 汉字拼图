@@ -1,0 +1,23 @@
+characters = 
+  Flatten[Table[
+    FromCharacterCode[{i, j}, "CP936"], {i, 160 + 16, 160 + 54}, {j, 
+     161, 254}]];
+
+
+img = Map[ColorConvert[Import[#], "Grayscale"] &, 
+   FileNames["Pool\\*.jpg"]];
+i = 0;
+lightFunction[ch_] := 
+  Total[Flatten[ImageData[Binarize@Rasterize[ch]]]]/(13*16);
+Print[Dynamic[i]];
+(i++; light[#] = lightFunction[#]) & /@ characters;
+Do[i = 0;
+  result = Map[(i++;
+      SortBy[RandomSample[characters, 1000], 
+        Function[ch, Abs[light[ch] - #]]][[1]]) &, 
+    ImageData[ImageResize[img[[j]], 360]], {2}];
+  
+  Export["EXP\\" <> ToString[j] <> ".txt", 
+   Append[#, "\n"] & /@ result // StringJoin // StringJoin];
+  Print[j/Length[img]], {j, 1, Length[img]}];
+Print["Calculate Complete!"]
